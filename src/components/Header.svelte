@@ -19,7 +19,7 @@
         </div>
         <div class="flex items-center gap-4">
             <div class="flex items-center gap-1 w-24">
-                <i class="fas fa-flag text-gray-600"></i>
+                <i class="fas fa-flag text-green-500"></i>
                 {#if episode}
                     <span>{unixToHHMMSS(episode.schedule.onAirTime)}</span>
                 {:else}
@@ -35,7 +35,7 @@
                 {/if}
             </div>
             <div class="flex items-center gap-1 w-24">
-                <i class="fas fa-clock text-gray-600"></i>
+                <i class="fas fa-stopwatch text-gray-600"></i>
                 {#if episode}
                     <span>{millisecondsToHHMMSS((episode.schedule.offAirTime - episode.schedule.onAirTime) * 1000)}</span>
                 {:else}

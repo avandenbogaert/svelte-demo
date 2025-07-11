@@ -6,7 +6,8 @@ type Store<T> = {
   error?: Error
 }
 
-export function createRemoteStore<T>(fetcher: () => Promise<T>) {
+// loosely inspired by how @tanstack/query would work
+export function createQueryStore<T>(fetcher: () => Promise<T>) {
   const { subscribe, set } = writable<Store<T>>({ isLoading: true });
 
   const controller = new AbortController();
@@ -17,7 +18,7 @@ export function createRemoteStore<T>(fetcher: () => Promise<T>) {
     try {
       set({ data: await fetcher(), isLoading: false, error: undefined });
     } catch (err) {
-      console.error('[Remote Store] An error occurred while fetching store data', err);
+      console.error('[QueryStore] An error occurred while fetching store data', err);
 
       if (err instanceof Error && err.name !== 'AbortError') {
         set({ data: undefined, isLoading: false, error: err });

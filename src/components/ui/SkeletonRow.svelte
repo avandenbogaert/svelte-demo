@@ -1,6 +1,6 @@
 <script lang="ts">
   import Skeleton from './Skeleton.svelte';
-  export let columns: number = 5;
+  const { columns = 5 }: { columns: number } = $props();
 </script>
 
 <tr class="border-zinc-200 h-10">

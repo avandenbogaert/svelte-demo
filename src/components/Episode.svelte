@@ -2,6 +2,7 @@
 import SkeletonRow from './ui/SkeletonRow.svelte';
 import Part from './Part.svelte';
 import type { Episode } from '../episode/types';
+import { unixToHHMMSS } from '../library/time';
 
 type Props = {
   isLoading: boolean;
@@ -31,10 +32,17 @@ const { isLoading, episode }: Props = $props();
             {#each Array(8) as _}
                 <SkeletonRow columns={8} />
             {/each}
+        {:else if episode}
+            {#each episode.parts as part}
+                <Part part={part} />
+            {/each}
+            <tr>
+                <td colspan="7" class="px-4 py-2 text-right font-bold">
+                    <i class="fas fa-flag-checkered text-red-500 px-2"></i>
+                    {unixToHHMMSS(episode.schedule.offAirTime)}
+                </td>
+            </tr>
         {/if}
-        {#each episode?.parts ?? [] as part}
-            <Part part={part} />
-        {/each}
         </tbody>
     </table>
 </div>
