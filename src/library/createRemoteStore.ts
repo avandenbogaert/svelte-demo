@@ -7,9 +7,7 @@ type Store<T> = {
 }
 
 export function createRemoteStore<T>(fetcher: () => Promise<T>) {
-  const { subscribe, set, update } = writable<Store<T>>({
-    isLoading: true
-  });
+  const { subscribe, set } = writable<Store<T>>({ isLoading: true });
 
   const controller = new AbortController();
 
@@ -17,13 +15,13 @@ export function createRemoteStore<T>(fetcher: () => Promise<T>) {
     set({ data: undefined, isLoading: true, error: undefined });
 
     try {
-      const data = await fetcher();
-      set({ data, isLoading: false, error: undefined });
+      set({ data: await fetcher(), isLoading: false, error: undefined });
     } catch (err) {
+      console.error('[Remote Store] An error occurred while fetching store data', err);
+
       if (err instanceof Error && err.name !== 'AbortError') {
         set({ data: undefined, isLoading: false, error: err });
       } else {
-        console.error(err);
         set({ data: undefined, isLoading: false, error: new Error('unknown error') });
       }
     }

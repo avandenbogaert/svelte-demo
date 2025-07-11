@@ -38,7 +38,7 @@ const sleep = async (time: number) => new Promise<void>((resolve) => setTimeout(
 
 export async function fetchEpisodeJson(): Promise<EpisodeJson> {
   const res = await fetch(`/episode.json`);
-  await sleep(200); // simulate load times
+  await sleep(500); // simulate load times
   return await res.json();
 }
 

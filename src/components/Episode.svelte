@@ -8,11 +8,11 @@ type Props = {
   episode?: Episode;
 };
 
-// i could just import episodeStore here, but having an Episode component that expects an "episode" makes sense
+// I could just import episodeStore here, but having an Episode component that expects an "episode" makes sense
 const { isLoading, episode }: Props = $props();
 </script>
 
-<div class="overflow-x-auto bg-white shadow rounded-lg">
+<div class="w-full overflow-x-auto bg-white shadow rounded-lg">
     <table class="min-w-full table-auto text-zinc-600">
         <thead class="bg-gray-50">
         <tr>
@@ -28,7 +28,7 @@ const { isLoading, episode }: Props = $props();
         </thead>
         <tbody class="divide-y">
         {#if isLoading}
-            {#each Array(8) as _, i}
+            {#each Array(8) as _}
                 <SkeletonRow columns={8} />
             {/each}
         {/if}
