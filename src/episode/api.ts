@@ -34,14 +34,18 @@ export type TimingJson = {
   item: Record<string, Timing>;
 };
 
+const sleep = async (time: number) => new Promise<void>((resolve) => setTimeout(() => resolve(), time));
+
 export async function fetchEpisodeJson(): Promise<EpisodeJson> {
   const res = await fetch(`/episode.json`);
+  await sleep(200); // simulate load times
   return await res.json();
 }
 
 export async function fetchTimingsJson(): Promise<TimingJson> {
   const res = await fetch(`/timings.json`);
   const timings = await res.json();
+  await sleep(200); // simulate load times
 
   // I fill in the missing data here, as I would suspect the backend would deliver complete data
   // this assumption may or may not be correct, but I don't know the domain.
