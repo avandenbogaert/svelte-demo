@@ -1,15 +1,18 @@
 <script lang="ts">
 import Header from './components/Header.svelte';
-import Part from './components/episode/Part.svelte';
+import Part from './components/Part.svelte';
+import { episodeStore } from './episode/store';
+
+let store = episodeStore;
 </script>
 
-<Header />
+<Header episode={$store.data} />
 <main class="p-4">
     <div class="overflow-x-auto bg-white shadow rounded-lg">
-        <table class="min-w-full table-auto">
+        <table class="min-w-full table-auto text-zinc-600">
             <thead class="bg-gray-50">
                 <tr>
-                    <th class="w-12"></th>
+                    <th class="w-24"></th>
                     <th class="px-4 py-2 text-left font-light" colspan="2">Rundown</th>
                     <th class="px-4 py-2 text-right font-light">Est. duration</th>
                     <th class="px-4 py-2 text-right font-light">Front time</th>
@@ -19,8 +22,11 @@ import Part from './components/episode/Part.svelte';
                 </tr>
             </thead>
             <tbody class="divide-y">
-                <Part />
-                <Part />
+            {#if $store.data }
+                {#each $store.data.parts as part }
+                    <Part part={part} />
+                {/each}
+            {/if}
             </tbody>
         </table>
     </div>
